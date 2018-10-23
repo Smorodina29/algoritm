@@ -5,31 +5,43 @@ import java.util.Arrays;
 public class Quicksort {
     public static void main(String[]args) {
         int[] array = {5, 785, 12, -3, 0, 581, 12, 36, 78, 10, 54, 36, 78, 96};
-        quicksort(array, 0, array.length);
+        quickSort(array, 0, array.length-1);
         System.out.println(Arrays.toString(array));
     }
 
-    public static void quicksort(int[] array1, int startIndex, int endIndex) {
-        int pivotValue = getPivot(array1, startIndex, endIndex);
-        int currentStartIndex = startIndex;
-        int currentEndIndex = endIndex - 1;
-
-        while (currentStartIndex < currentEndIndex) {
-            while (array1[currentStartIndex] < pivotValue) currentStartIndex++;
-            while (array1[currentEndIndex] > pivotValue) currentEndIndex--;
-            if (currentStartIndex < currentEndIndex) {
-                int buffer = array1[currentStartIndex];
-                array1[currentStartIndex] = array1[currentEndIndex];
-                array1[currentEndIndex] = buffer;
+    public static void quickSort(int[] source, int leftBorder, int rightBorder) {
+        int leftMarker = leftBorder;
+        int rightMarker = rightBorder;
+        int pivot = source[(leftMarker + rightMarker) / 2];
+        do {
+            // Двигаем левый маркер слева направо пока элемент меньше, чем pivot
+            while (source[leftMarker] < pivot) {
+                leftMarker++;
             }
-        }
-        if (currentStartIndex > startIndex) quicksort(
-                array1, startIndex, currentStartIndex);
-        if (endIndex > currentStartIndex + 1) quicksort(
-                array1, currentStartIndex + 1, endIndex);
-    }
+            // Двигаем правый маркер, пока элемент больше, чем pivot
+            while (source[rightMarker] > pivot) {
+                rightMarker--;
+            }
+            // Проверим, не нужно обменять местами элементы, на которые указывают маркеры
+            if (leftMarker <= rightMarker) {
+                // Левый маркер будет меньше правого только если мы должны выполнить swap
+                if (leftMarker < rightMarker) {
+                    int tmp = source[leftMarker];
+                    source[leftMarker] = source[rightMarker];
+                    source[rightMarker] = tmp;
+                }
+                // Сдвигаем маркеры, чтобы получить новые границы
+                leftMarker++;
+                rightMarker--;
+            }
+        } while (leftMarker <= rightMarker);
 
-    public static int getPivot(int[] array1, int startIndex, int endIndex) {
-        return array1[endIndex - 1];
+        // Выполняем рекурсивно для частей
+        if (leftMarker < rightBorder) {
+            quickSort(source, leftMarker, rightBorder);
+        }
+        if (leftBorder < rightMarker) {
+            quickSort(source, leftBorder, rightMarker);
+        }
     }
 }
