@@ -11,13 +11,17 @@ public class InserSort {
     }
 
     private static int[] sort(int[] array) {
-        int j, t;
+        int j, temp;
         for (int i=1; i<array.length; i++){
-            t = array[i];
-            for(j=i-1; j>=0 && array[j]>t; j--){
-                array[j+1]=array[j];
+            temp = array[i];
+            j = i - 1;
+            for(; j>=0; j--){
+                if(temp<array[j]) {
+                    array[j + 1] = array[j];
+                }
+                else break;
             }
-            array[j+1] = t;
+            array[j+1] = temp;
         }
         return array;
     }

@@ -1,3 +1,5 @@
+package lyambda;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,5 +80,15 @@ public class Lambda {
             this.name = name;
             this.age = age;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
